@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <h2>List all recipes with {{name}}</h2>
+  <ul class="list-group list-group-flush" *ngFor="let recipe of recipes">
+    <li class="list-group-item list-group-item-light">
+      <h4><a id="link" href="./recipes/view/{{recipe.id}}">{{recipe.title}}</a></h4>
+      <strong>Serving:</strong> {{recipe.serving}} <br>
+      <strong> Cooking Time:</strong> {{recipe.cookingTime}} minutos<br>
+      {{recipe.preparation.substr(0, 200)}}...
+    </li>
+  </ul>
+</div>
+
+

@@ -1,0 +1,139 @@
+<div class="container-fluid">
+  <h2>Create a new Recipe</h2>
+  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Título:</label>
+      <input formControlName="title" id="title" type="text" class="form-control" />
+      <!-- <div *ngIf="f['title'].touched && f['title'].invalid" class="alert alert-danger">
+        <div *ngIf="f['title'].errors && f['title'].errors['required']">
+          O título é obrigatório!
+        </div>
+        <div *ngIf="f['title'].errors && f['title'].errors['minlength']">
+        O título necessita de ter pelo menos 5 caracteres!
+        </div>
+      </div>    -->
+    </div>
+    <div class="categories-checkbox-group" formArrayName="categories" >
+      <p>Select one or more categories:</p>
+      <div class="row">
+        <div class="col-sm">
+          <input type="checkbox" formGroupName="name" id="name" name="name" value="categories.name"/>
+          <label for="categories">Appetizers</label>
+        </div>
+        <div class="col-sm">
+          <input type="checkbox" id="name" name="name" value="categories.name">
+          <label for="categories">Soups</label>
+        </div>
+        <div class="col-sm">
+          <input type="checkbox" id="name" name="name" value="categories.name">
+          <label for="categories">Beef</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <input type="checkbox" id="category4" name="category4" value="Chicken">
+          <label for="category4">Chicken</label>
+        </div>
+        <div class="col-sm">
+          <input type="checkbox" id="category5" name="category5" value="Seafood">
+          <label for="category5">Seafood</label>
+        </div>
+        <div class="col-sm">
+          <input type="checkbox" id="category6" name="category6" value="Pasta">
+          <label for="category6">Pasta</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <input type="checkbox" id="category7" name="category7" value="Vegetarian">
+          <label for="category7">Vegetarian</label>
+        </div>
+        <div class="col-sm">
+          <input type="checkbox" id="category8" name="category8" value="Salads">
+          <label for="category8">Salads</label>
+        </div>
+        <div class="col-sm">
+          <input type="checkbox" id="category9" name="category9" value="Desserts">
+          <label for="category9">Desserts</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <p>Select one:</p>
+      <div class="row">
+        <div class="col-sm">
+          <input type="checkbox" id="difficulty1" name="difficulty1" value="0">
+          <label for="difficulty1">Easy</label>
+        </div>
+        <div class="col-sm">
+          <input type="checkbox" id="difficulty2" name="difficulty2" value="1">
+          <label for="difficulty2">Medium</label>
+        </div>
+        <div class="col-sm">
+          <input type="checkbox" id="difficulty3" name="difficulty3" value="2">
+          <label for="difficulty3">Hard</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Serving:</label>
+      <input formControlName="serving" id="serving" type="text" class="form-control" />
+      <!-- <div *ngIf="f['title'].touched && f['title'].invalid" class="alert alert-danger">
+        <div *ngIf="f['title'].errors && f['title'].errors['required']">
+          O título é obrigatório!
+        </div>
+        <div *ngIf="f['title'].errors && f['title'].errors['minlength']">
+        O título necessita de ter pelo menos 5 caracteres!
+        </div>
+      </div>    -->
+    </div>
+    <div class="form-group">
+      <label>Cooking Time:</label>
+      <input formControlName="cookingTime" id="cookingTime" type="text" class="form-control" />
+      <!-- <div *ngIf="f['title'].touched && f['title'].invalid" class="alert alert-danger">
+        <div *ngIf="f['title'].errors && f['title'].errors['required']">
+          O título é obrigatório!
+        </div>
+        <div *ngIf="f['title'].errors && f['title'].errors['minlength']">
+        O título necessita de ter pelo menos 5 caracteres!
+        </div>
+      </div>    -->
+    </div>
+    <div class="form-group">
+      <label>Steps:</label>
+      <input formControlName="preparation" id="preparation" type="text" class="form-control" />
+      <!-- <div *ngIf="f['title'].touched && f['title'].invalid" class="alert alert-danger">
+        <div *ngIf="f['title'].errors && f['title'].errors['required']">
+          O título é obrigatório!
+        </div>
+        <div *ngIf="f['title'].errors && f['title'].errors['minlength']">
+        O título necessita de ter pelo menos 5 caracteres!
+        </div>
+      </div>    -->
+    </div>
+    <div class="form-group">
+        <!-- <label>List Ingredients:</label>
+        <input type="text" class="form-control"> -->
+    </div>
+
+
+      <!-- <div *ngIf="f['title'].touched && f['title'].invalid" class="alert alert-danger">
+        <div *ngIf="f['title'].errors && f['title'].errors['required']">
+          O título é obrigatório!
+        </div>
+        <div *ngIf="f['title'].errors && f['title'].errors['minlength']">
+        O título necessita de ter pelo menos 5 caracteres!
+        </div>
+      </div>    -->
+
+
+     <button type="submit" class="btn btn-primary">Submeter</button>
+     <!--[disabled]="!recipeForm.valid"-->
+  </form>
+</div>
+
+
+
+
+
+

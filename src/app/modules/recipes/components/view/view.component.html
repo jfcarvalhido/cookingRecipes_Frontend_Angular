@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="list-group-item list-group-item-light">
+    <h2> {{recipe.title}} </h2>
+    <ul class="list-inline-item" *ngFor="let category of recipe.categories">
+      {{category.name}}
+    </ul>
+    <p><strong>Serving: </strong> {{recipe.serving}} </p>
+    <p><strong>Time: </strong> {{recipe.cookingTime}} minutos</p>
+    <p><strong>Ingredients: </strong></p>
+    <ul *ngFor="let ingredient of recipe.ingredients">
+      <li>
+        {{ingredient.nameIngredient}}
+      </li>
+    </ul>
+    <p><strong>Steps: </strong><br>{{recipe.preparation}}</p>
+  </div>
+</div>
