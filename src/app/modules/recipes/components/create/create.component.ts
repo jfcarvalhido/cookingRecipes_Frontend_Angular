@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RecipeService } from '../../services/recipe.service';
+import { Recipe } from '../../interfaces/recipe';
+import { Ingredient } from '../../interfaces/ingredient';
+import { Category } from '../../interfaces/category';
 
 @Component({
   selector: 'app-create',
@@ -12,25 +15,30 @@ import { RecipeService } from '../../services/recipe.service';
 export class CreateComponent implements OnInit {
   recipeForm!: FormGroup;
 
-  constructor(public recipeService : RecipeService, private router: Router, private route : ActivatedRoute) { }
+
+  constructor(private fb: FormBuilder, public recipeService : RecipeService, private router: Router, private route : ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.initForm();
+  }
+
+  private initForm() {
+    let title = '';
+    let categories = '';
+    let serving = '';
+    let difficulty = 0;
+    let cookingTime = '';
+    let ingredients = '';
+    let preparation = '';
+
     this.recipeForm = new FormGroup({
-      title: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      categories: new FormArray([
-        new FormGroup({
-          name: new FormControl('', [Validators.required])
-        })
-      ]),
-      serving: new FormControl('', [Validators.required]),
-      difficulty: new FormControl('', [Validators.required]),
-      cookingTime: new FormControl('', [Validators.required]),
-      ingredients: new FormArray([
-        new FormGroup({
-          nameIngredient: new FormControl('', [Validators.required])
-        })
-      ]),
-      preparation: new FormControl('', [Validators.required, Validators.minLength(1)])
+      'title': new FormControl(title, [Validators.required, Validators.minLength(1)]),
+      'categories': new FormControl(categories, [Validators.required, Validators.minLength(0)]),
+      'serving': new FormControl(serving, [Validators.required]),
+      'difficulty': new FormControl(difficulty, [Validators.required]),
+      'cookingTime': new FormControl(cookingTime, [Validators.required]),
+      'ingredients': new FormControl(ingredients, [Validators.required, Validators.minLength(0)]),
+      'preparation': new FormControl(preparation, [Validators.required, Validators.minLength(1)])
     });
   }
 
@@ -41,11 +49,29 @@ export class CreateComponent implements OnInit {
   onSubmit(){
     console.log(this.recipeForm.value);
 
-    this.recipeService.create(this.recipeForm.value).subscribe((res: any) => {
+    let rf = this.recipeForm.value;
+
+    const recipe : Recipe = {
+      id: 0,
+      title: rf.title,
+      categories: [],
+      serving: rf.serving,
+      difficulty : rf.difficulty,
+      cookingTime : rf.cookingTime,
+      ingredients: String(rf.ingredients)
+      .split(',')
+      //.map(i => Ingredient { nameIngredient: i, id: 0 })
+      .map(i => {
+        const newIngredient : Ingredient = { id: 0, nameIngredient: i.trim() } as Ingredient
+        return newIngredient
+      }),
+      preparation: rf.preparation
+    };
+
+    console.log(recipe);
+
+    this.recipeService.create(recipe).subscribe((res: any) => {
       this.router.navigateByUrl("/recipes/index");
     });
   }
-
-
-
 }
