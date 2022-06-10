@@ -65,6 +65,24 @@
       </div>
     </div> -->
     <div class="form-group">
+      <label for="difficulty">Difficulty:</label>
+      <div>
+        <input id="0" type="radio" value="0" name="difficulty" formControlName="difficulty" >
+        <label for="0">Easy</label>
+     </div>
+     <div>
+        <input id="1" type="radio" value="1" name="difficulty" formControlName="difficulty" >
+        <label for="1">Medium</label>
+     </div>
+     <div>
+      <input id="2" type="radio" value="2" name="difficulty" formControlName="difficulty" >
+      <label for="2">Hard</label>
+   </div>
+      <!-- <div *ngIf="f.[difficulty.touched && f.gender.invalid" class="alert alert-danger">
+          <div *ngIf="f.gender.errors.required">Name is required.</div>
+      </div> -->
+  </div>
+    <!-- <div class="form-group">
       <p>Select one:</p>
       <div class="row">
         <div class="col-sm">
@@ -80,7 +98,7 @@
           <label for="difficulty3">Hard</label>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="form-group">
       <label>Serving:</label>
       <input formControlName="serving" id="serving" type="text" class="form-control" />

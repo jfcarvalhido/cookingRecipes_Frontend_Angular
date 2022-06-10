@@ -25,9 +25,9 @@ export class CreateComponent implements OnInit {
   private initForm() {
     let title = '';
     let categories = '';
-    let serving = '';
-    let difficulty = 0;
-    let cookingTime = '';
+    let serving = null;
+    let difficulty = null;
+    let cookingTime = null;
     let ingredients = '';
     let preparation = '';
 
@@ -55,9 +55,9 @@ export class CreateComponent implements OnInit {
       id: 0,
       title: rf.title,
       categories: [],
-      serving: rf.serving,
-      difficulty : rf.difficulty,
-      cookingTime : rf.cookingTime,
+      serving: Number(rf.serving),
+      difficulty : Number(rf.difficulty),
+      cookingTime : Number(rf.cookingTime),
       ingredients: String(rf.ingredients)
       .split(',')
       //.map(i => Ingredient { nameIngredient: i, id: 0 })
