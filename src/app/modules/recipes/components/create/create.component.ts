@@ -14,7 +14,7 @@ import { Category } from '../../interfaces/category';
 })
 export class CreateComponent implements OnInit {
   recipeForm!: FormGroup;
-
+  categoriesData : Category[] = [];
 
   constructor(private fb: FormBuilder, public recipeService : RecipeService, private router: Router, private route : ActivatedRoute) {}
 
@@ -24,7 +24,11 @@ export class CreateComponent implements OnInit {
 
   private initForm() {
     let title = '';
-    let categories = '';
+    let categories =
+      this.recipeService.getAllCategories().subscribe( (data: Category[]) => {
+      this.categoriesData = data;
+      console.log(this.categoriesData);
+    });
     let serving = null;
     let difficulty = null;
     let cookingTime = null;
@@ -33,13 +37,24 @@ export class CreateComponent implements OnInit {
 
     this.recipeForm = new FormGroup({
       'title': new FormControl(title, [Validators.required, Validators.minLength(1)]),
-      'categories': new FormControl(categories, [Validators.required, Validators.minLength(0)]),
+      'categories': new FormArray([new FormControl(categories, [Validators.required])]),
       'serving': new FormControl(serving, [Validators.required]),
       'difficulty': new FormControl(difficulty, [Validators.required]),
       'cookingTime': new FormControl(cookingTime, [Validators.required]),
       'ingredients': new FormControl(ingredients, [Validators.required, Validators.minLength(0)]),
       'preparation': new FormControl(preparation, [Validators.required, Validators.minLength(1)])
     });
+  }
+
+  onChange(e : any) {
+    const categories : FormArray = this.recipeForm.get('categories') as FormArray;
+
+    if (e.target.checked) {
+      categories.push(new FormControl(e.target.value));
+    } else {
+      const index = categories.controls.findIndex(x => x.value === e.target.value);
+      categories.removeAt(index);
+    }
   }
 
   get f(){
@@ -54,13 +69,15 @@ export class CreateComponent implements OnInit {
     const recipe : Recipe = {
       id: 0,
       title: rf.title,
-      categories: [],
+      categories: (rf.categories.slice(1) as string[]).map(i => {
+        const newCategory : Category = { id: 0, name: i } as Category
+        return newCategory
+      }),
       serving: Number(rf.serving),
       difficulty : Number(rf.difficulty),
       cookingTime : Number(rf.cookingTime),
       ingredients: String(rf.ingredients)
       .split(',')
-      //.map(i => Ingredient { nameIngredient: i, id: 0 })
       .map(i => {
         const newIngredient : Ingredient = { id: 0, nameIngredient: i.trim() } as Ingredient
         return newIngredient

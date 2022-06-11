@@ -13,6 +13,14 @@
         </div>
       </div>
     </div>
+    <div class="form-group" *ngFor="let categories of categoriesData; let i=index">
+      <label>
+      <input type="checkbox" [value]="categories.name" (change)="onChange($event)" />
+      {{categories.name}}</label>
+    </div>
+    <p class="error" *ngIf="this.recipeForm.controls['categories'].errors?.['required']">
+      Checkbox is required, select atleast one value.
+    </p>
     <!-- <div>
       <label formArrayName="categories" *ngFor="let category of recipeForm.controls.categories.controls; let i = index">
         <input type="checkbox" [formControlName]="i">

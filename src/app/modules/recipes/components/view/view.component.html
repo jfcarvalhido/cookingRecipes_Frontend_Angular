@@ -4,6 +4,7 @@
     <ul class="list-inline-item" *ngFor="let category of recipe.categories">
       {{category.name}}
     </ul>
+    <p><strong>Difficulty: </strong> {{ recipe.difficulty == 0 ? "Easy" : recipe.difficulty == 1 ? "Medium" : "Hard"}} </p>
     <p><strong>Serving: </strong> {{recipe.serving}} </p>
     <p><strong>Time: </strong> {{recipe.cookingTime}} minutos</p>
     <p><strong>Ingredients: </strong></p>

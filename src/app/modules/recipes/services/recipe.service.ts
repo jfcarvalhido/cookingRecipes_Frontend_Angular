@@ -16,6 +16,11 @@ export class RecipeService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getAllCategories(): Observable<any> {
+    return this.httpClient.get(this.apiUrl + "/categories/listAll")
+    .pipe(catchError(this.errorHandler));
+  }
+
   getAll(): Observable<any> {
     return this.httpClient.get(this.apiUrl + "/recipes/listAll")
     .pipe(catchError(this.errorHandler));
