@@ -1,1 +1,112 @@
-<p>edit works!</p>
+<div class="container-fluid">
+  <h2>Edit a Recipe</h2>
+  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group" >
+      <label><strong>Title:</strong></label>
+      <input [(ngModel)]="recipe.title" formControlName="title" id="title" type="text" class="form-control">
+      <div *ngIf="f['title'].touched && f['title'].invalid" class="alert alert-danger">
+        <div *ngIf="f['title'].errors && f['title'].errors['required']">
+          Content is required!
+        </div>
+        <div *ngIf="f['title'].errors && f['title'].errors['minlength']">
+        The title needs to be at least 5 characters!
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" formArrayName="categories" >
+      <label><strong>Select 1 or more categories:</strong></label><br>
+      <div class="form-check form-check-inline">
+        <div *ngFor="let category of allCategories; let i=index">
+          <input class="form-check-input" type="checkbox" [value]="category.name" (change)="onChange($event)">
+          <label class="form-check-label">{{category.name}}</label>
+        </div>
+      </div>
+      <div>
+        <p class="error" *ngIf="this.recipeForm.controls['categories'].errors?.['required']">
+        Checkbox is required, select at least one value.
+        </p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label><strong>Difficulty </strong> (0 - easy, 1 - medium, 2 - hard)<strong>:</strong></label><br>
+      <label> </label>
+      <input [ngModel]="recipe.difficulty"  formControlName="difficulty" id="difficulty" type="text" class="form-control">
+      <div *ngIf="f['difficulty'].touched && f['difficulty'].invalid" class="alert alert-danger">
+        <div *ngIf="f['difficulty'].errors && f['difficulty'].errors['required']">
+          Content is required!
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label><strong>Serving:</strong></label>
+      <input [(ngModel)]="recipe.serving" formControlName="serving" id="serving" type="text" class="form-control">
+      <div *ngIf="f['serving'].touched && f['serving'].invalid" class="alert alert-danger">
+        <div *ngIf="f['serving'].errors && f['serving'].errors['required']">
+          Content is required!
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label><strong>Cooking Time:</strong></label>
+      <input [(ngModel)]="recipe.cookingTime" formControlName="cookingTime" id="cookingTime" type="text" class="form-control">
+      <div *ngIf="f['cookingTime'].touched && f['cookingTime'].invalid" class="alert alert-danger">
+        <div *ngIf="f['cookingTime'].errors && f['cookingTime'].errors['required']">
+          Content is required!
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-2r">
+      <div class="card-header ">
+        <div class="header-container">
+          <span class="product-header">
+            <strong>List All Ingredients:</strong>
+            <input type="button" (click)="addIngredient('')" value="Add Ingredient">
+          </span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <ul class="list-group">
+              <li class="list-group-item" formArrayName="ingredients"
+              *ngFor="let ingredient of recipeForm.controls['ingredients'].value; let i = index;">
+                <div [formGroupName]="i" class="row">
+                  <div class="col-4">
+                    <input type="text" class="form-control" [value]="ingredient.nameIngredient" required>
+                  </div>
+                  <div class="col-2">
+                    <input type="button" (click)="deleteIngredient(i)" value="Delete">
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <!--<input type="text" class="form-control" placeholder="List all ingredients separated by ','">-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label><strong>Steps:</strong></label>
+      <textarea [(ngModel)]="recipe.preparation" formControlName="preparation" id="preparation" type="text"
+      class="form-control"></textarea>
+      <div *ngIf="f['title'].touched && f['title'].invalid" class="alert alert-danger">
+        <div *ngIf="f['title'].errors && f['title'].errors['required']">
+          Content is required!
+        </div>
+        <div *ngIf="f['title'].errors && f['title'].errors['minlength']">
+        The steps needs to be at least 5 characters!
+        </div>
+      </div>
+    </div>
+
+  <button type="submit" class="btn btn-success">Submeter</button>
+
+  </form>
+</div>

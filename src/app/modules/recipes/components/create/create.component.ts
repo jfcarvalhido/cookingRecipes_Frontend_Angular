@@ -36,13 +36,13 @@ export class CreateComponent implements OnInit {
     let preparation = '';
 
     this.recipeForm = new FormGroup({
-      'title': new FormControl(title, [Validators.required, Validators.minLength(1)]),
+      'title': new FormControl(title, [Validators.required, Validators.minLength(5), Validators.maxLength(200)]),
       'categories': new FormArray([new FormControl(categories, [Validators.required])]),
       'serving': new FormControl(serving, [Validators.required]),
       'difficulty': new FormControl(difficulty, [Validators.required]),
       'cookingTime': new FormControl(cookingTime, [Validators.required]),
-      'ingredients': new FormControl(ingredients, [Validators.required, Validators.minLength(0)]),
-      'preparation': new FormControl(preparation, [Validators.required, Validators.minLength(1)])
+      'ingredients': new FormControl(ingredients, [Validators.required]),
+      'preparation': new FormControl(preparation, [Validators.required, Validators.maxLength(3000)])
     });
   }
 

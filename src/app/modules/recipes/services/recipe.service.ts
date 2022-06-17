@@ -52,7 +52,7 @@ export class RecipeService {
   }
 
   update(id: number, recipes : Recipe){
-    return this.httpClient.put(this.apiUrl + "/Recipes/Uptdate/" + id, JSON.stringify(recipes), this.httpOptions).
+    return this.httpClient.put(this.apiUrl + "/recipes/update/" + id, JSON.stringify(recipes), this.httpOptions).
     pipe(catchError(this.errorHandler));
   }
 
