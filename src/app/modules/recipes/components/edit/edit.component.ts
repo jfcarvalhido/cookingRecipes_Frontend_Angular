@@ -50,19 +50,6 @@ export class EditComponent implements OnInit {
     });
   }
 
-  /* addIngredient() {
-    (<FormArray>this.recipeForm.get('ingredients')).push(
-      new FormGroup({
-        'nameIngredient': new FormControl(null, Validators.required)
-
-      })
-    );
-  } */
-
-  get ingredients() {
-    return this.recipeForm.controls['ingredients']
-  }
-
   addIngredient(nameIngredient : string){
     let ingredients = this.recipeForm.get('ingredients') as FormArray;
 
@@ -71,6 +58,10 @@ export class EditComponent implements OnInit {
        })
     );
   }
+
+  trackByFn(index: any, nameIngredient: any) {
+    return index;
+ }
 
   deleteIngredient(index : number){
     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);

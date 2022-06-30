@@ -14,36 +14,45 @@ import { Category } from '../../interfaces/category';
 })
 export class CreateComponent implements OnInit {
   recipeForm!: FormGroup;
-  categoriesData : Category[] = [];
+  allCategories : Category[] = [];
 
   constructor(private fb: FormBuilder, public recipeService : RecipeService, private router: Router, private route : ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.initForm();
-  }
-
-  private initForm() {
-    let title = '';
-    let categories =
-      this.recipeService.getAllCategories().subscribe( (data: Category[]) => {
-      this.categoriesData = data;
-      console.log(this.categoriesData);
+    let allCategories = this.recipeService.getAllCategories().subscribe( (data: Category[]) => {
+      this.allCategories = data;
     });
-    let serving = null;
-    let difficulty = null;
-    let cookingTime = null;
-    let ingredients = '';
-    let preparation = '';
 
     this.recipeForm = new FormGroup({
-      'title': new FormControl(title, [Validators.required, Validators.minLength(5), Validators.maxLength(200)]),
-      'categories': new FormArray([new FormControl(categories, [Validators.required])]),
-      'serving': new FormControl(serving, [Validators.required]),
-      'difficulty': new FormControl(difficulty, [Validators.required]),
-      'cookingTime': new FormControl(cookingTime, [Validators.required]),
-      'ingredients': new FormControl(ingredients, [Validators.required]),
-      'preparation': new FormControl(preparation, [Validators.required, Validators.maxLength(3000)])
+      title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(200)]),
+      categories: new FormArray([new FormControl(allCategories, [Validators.required])]),
+      serving: new FormControl(null, [Validators.required]),
+      difficulty: new FormControl(null, [Validators.required]),
+      cookingTime: new FormControl(null, [Validators.required]),
+      ingredients : new FormArray([]),
+      preparation: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(3000)])
     });
+  }
+
+  get f(){
+    return this.recipeForm.controls;
+  }
+
+  addIngredient(nameIngredient : string){
+    let ingredients = this.recipeForm.get('ingredients') as FormArray;
+
+    ingredients.push(this.fb.group({
+       nameIngredient : [nameIngredient, [Validators.required]]
+       })
+    );
+  }
+
+  trackByFn(index: any, nameIngredient: any) {
+    return index;
+ }
+
+  deleteIngredient(index : number){
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
   }
 
   onChange(e : any) {
@@ -55,10 +64,6 @@ export class CreateComponent implements OnInit {
       const index = categories.controls.findIndex(x => x.value === e.target.value);
       categories.removeAt(index);
     }
-  }
-
-  get f(){
-    return this.recipeForm.controls;
   }
 
   onSubmit(){
@@ -76,12 +81,7 @@ export class CreateComponent implements OnInit {
       serving: Number(rf.serving),
       difficulty : Number(rf.difficulty),
       cookingTime : Number(rf.cookingTime),
-      ingredients: String(rf.ingredients)
-      .split(',')
-      .map(i => {
-        const newIngredient : Ingredient = { id: 0, nameIngredient: i.trim() } as Ingredient
-        return newIngredient
-      }),
+      ingredients: rf.ingredients,
       preparation: rf.preparation
     };
 

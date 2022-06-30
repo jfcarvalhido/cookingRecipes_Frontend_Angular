@@ -1,18 +1,29 @@
 <div class="container-fluid">
   <div class="list-group-item list-group-item-light">
     <h2> {{recipe.title}} </h2>
+
+    <p><strong>Category:</strong></p>
     <ul class="list-inline-item" *ngFor="let category of recipe.categories">
-      {{category.name}}
+      <li id="listCategories" >
+        {{category.name}}
+      </li>
     </ul>
+
     <p><strong>Difficulty: </strong> {{ recipe.difficulty == 0 ? "Easy" : recipe.difficulty == 1 ? "Medium" : "Hard"}} </p>
+
     <p><strong>Serving: </strong> {{recipe.serving}} </p>
+
     <p><strong>Time: </strong> {{recipe.cookingTime}} minutos</p>
+
     <p><strong>Ingredients: </strong></p>
-    <ul *ngFor="let ingredient of recipe.ingredients">
-      <li>
+
+    <ul class="list-inline-item" *ngFor="let ingredient of recipe.ingredients">
+      <li id="listIngredient">
         {{ingredient.nameIngredient}}
       </li>
     </ul>
+
     <p><strong>Steps: </strong><br>{{recipe.preparation}}</p>
+
   </div>
 </div>

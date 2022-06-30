@@ -8,6 +8,7 @@ import { ViewComponent } from './components/view/view.component';
 import { CreateComponent } from './components/create/create.component';
 import { EditComponent } from './components/edit/edit.component';
 import { SearchByCategoriesComponent } from './components/search-by-categories/search-by-categories.component';
+import { SearchComponent } from './components/search/search.component';
 
 
 
@@ -17,7 +18,8 @@ import { SearchByCategoriesComponent } from './components/search-by-categories/s
     ViewComponent,
     CreateComponent,
     EditComponent,
-    SearchByCategoriesComponent
+    SearchByCategoriesComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,

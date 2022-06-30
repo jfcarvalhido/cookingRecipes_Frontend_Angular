@@ -12,13 +12,16 @@
         <div *ngIf="f['title'].errors && f['title'].errors['minlength']">
         The title needs to be at least 5 characters!
         </div>
+        <div *ngIf="f['preparation'].errors && f['preparation'].errors['maxlength']">
+          Max 200 characters!
+        </div>
       </div>
     </div>
 
     <div class="form-group" formArrayName="categories" >
       <label><strong>Select 1 or more categories:</strong></label><br>
       <div class="form-check form-check-inline">
-        <div *ngFor="let category of allCategories; let i=index">
+        <div class="col-auto" *ngFor="let category of allCategories; let i=index">
           <input class="form-check-input" type="checkbox" [value]="category.name" (change)="onChange($event)">
           <label class="form-check-label">{{category.name}}</label>
         </div>
@@ -31,7 +34,7 @@
     </div>
 
     <div class="form-group">
-      <label><strong>Difficulty </strong> (0 - easy, 1 - medium, 2 - hard)<strong>:</strong></label><br>
+      <label id="difficulty"><strong>Difficulty </strong> (0 - easy, 1 - medium, 2 - hard)<strong>:</strong></label><br>
       <label> </label>
       <input [ngModel]="recipe.difficulty"  formControlName="difficulty" id="difficulty" type="text" class="form-control">
       <div *ngIf="f['difficulty'].touched && f['difficulty'].invalid" class="alert alert-danger">
@@ -52,7 +55,7 @@
     </div>
 
     <div class="form-group">
-      <label><strong>Cooking Time:</strong></label>
+      <label id="cookingTime"><strong>Cooking Time </strong>(minutos):</label>
       <input [(ngModel)]="recipe.cookingTime" formControlName="cookingTime" id="cookingTime" type="text" class="form-control">
       <div *ngIf="f['cookingTime'].touched && f['cookingTime'].invalid" class="alert alert-danger">
         <div *ngIf="f['cookingTime'].errors && f['cookingTime'].errors['required']">
@@ -65,8 +68,8 @@
       <div class="card-header ">
         <div class="header-container">
           <span class="product-header">
-            <strong>List All Ingredients:</strong>
-            <input type="button" (click)="addIngredient('')" value="Add Ingredient">
+            <strong>List All Ingredients: </strong>
+            <input class="btn btn-success" type="button" (click)="addIngredient('')" value="Add Ingredient">
           </span>
         </div>
       </div>
@@ -75,18 +78,17 @@
           <div class="col-12">
             <ul class="list-group">
               <li class="list-group-item" formArrayName="ingredients"
-              *ngFor="let ingredient of recipeForm.controls['ingredients'].value; let i = index;">
+              *ngFor="let ingredient of recipeForm.controls['ingredients'].value; let i = index; trackBy:trackByFn">
                 <div [formGroupName]="i" class="row">
                   <div class="col-4">
-                    <input type="text" class="form-control" [value]="ingredient.nameIngredient" required>
+                    <input type="text" class="form-control" formControlName="nameIngredient" [value]="ingredient.nameIngredient" required>
                   </div>
                   <div class="col-2">
-                    <input type="button" (click)="deleteIngredient(i)" value="Delete">
+                    <input class="btn btn-danger" type="button" (click)="deleteIngredient(i)" value="Delete">
                   </div>
                 </div>
               </li>
             </ul>
-            <!--<input type="text" class="form-control" placeholder="List all ingredients separated by ','">-->
           </div>
         </div>
       </div>

@@ -1,12 +1,28 @@
 <div class="container-fluid">
   <h2>List all recipes</h2>
-  <ul class="list-group list-group-flush" *ngFor="let recipe of recipes">
-    <li class="list-group-item list-group-item-light">
-      <h4><a id="link" href="./recipes/view/{{recipe.id}}">{{recipe.title}}</a></h4>
-      <strong>Serving:</strong> {{recipe.serving}} <br>
-      <strong> Cooking Time:</strong> {{recipe.cookingTime}} minutos<br>
-      {{recipe.preparation.substr(0, 200)}}...
-    </li>
-  </ul>
+  <div class="table">
+    <ul class="list-group list-group-flush" *ngFor="let recipe of recipes">
+      <li class="list-group-item list-group-item-light">
+        <table class="table" style="width:100%">
+          <tr>
+            <td>
+              <h4><a id="link" href="./recipes/view/{{recipe.id}}">{{recipe.title}}</a></h4>
+              <strong>Category:</strong>
+                <ul class="list-inline-item" *ngFor="let category of recipe.categories">{{category.name}}</ul> <br>
+              <strong>Serving:</strong> {{recipe.serving}} <br>
+              <strong> Cooking Time:</strong> {{recipe.cookingTime}} minutos<br>
+              {{recipe.preparation.substr(0, 200)}}...
+            </td>
+            <td>
+              <div class="text-center">
+                <button class="btn btn-danger" (click)="deleteRecipes(recipe.id)">Delete</button>
+                <a class="btn btn-info" href="/recipes/edit/{{recipe.id}}">Edit</a>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+  </div>
 </div>
 
